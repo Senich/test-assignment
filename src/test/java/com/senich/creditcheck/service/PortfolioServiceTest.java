@@ -1,19 +1,18 @@
-package com.senich.creditcheck;
+package com.senich.creditcheck.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import com.senich.creditcheck.AbstractTest;
 import com.senich.creditcheck.model.entity.Portfolio;
 import com.senich.creditcheck.model.entity.Sector;
 import com.senich.creditcheck.model.enums.SectorType;
 import com.senich.creditcheck.repository.SectorRepository;
-import com.senich.creditcheck.service.PortfolioService;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import reactor.core.publisher.Mono;
 
-@ActiveProfiles("test")
 class PortfolioServiceTest extends AbstractTest {
 
     @Autowired
@@ -24,7 +23,7 @@ class PortfolioServiceTest extends AbstractTest {
 
     @BeforeEach
     void setUp() {
-        sectorRepository.deleteAll().block();
+        clearDb();
     }
 
     @Test
@@ -33,10 +32,13 @@ class PortfolioServiceTest extends AbstractTest {
             .exposureLimit(100_000)
             .type(SectorType.INFORMATION_TECHNOLOGY)
             .build();
-        sectorRepository.save(it).block();
 
-        Mono<Portfolio> portfolio = portfolioService.createPortfolio("New portfolio", 1_000_000, List.of(it));
-        Assertions.assertNotNull(portfolio.block());
+        Portfolio portfolio = portfolioService.createPortfolio("New portfolio", 1_000_000, List.of(it));
+        assertNotNull(portfolio);
+        Sector sector = portfolio.getSecuritySectors().get(0);
+        assertEquals(SectorType.INFORMATION_TECHNOLOGY, sector.getType());
+        assertEquals(100_000, sector.getExposureLimit());
+        portfolioService.deletePortfolio(portfolio.getId());
     }
 
 }

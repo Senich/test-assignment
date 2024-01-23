@@ -7,10 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import java.util.List;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.Data;
 
 @Entity
-@Table(name = "traders")
+@Data
 public class Trader {
 
     @Id

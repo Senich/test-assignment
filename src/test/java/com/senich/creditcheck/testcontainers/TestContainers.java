@@ -17,15 +17,10 @@ public abstract class TestContainers {
 
     public static void startPostgres() {
         POSTGRES.start();
-        System.setProperty("spring.r2dbc.url", "r2dbc:postgresql://" + POSTGRES.getHost() + ":"
-            + POSTGRES.getFirstMappedPort() + "/" + POSTGRES.getDatabaseName());
-        System.setProperty("spring.r2dbc.username", POSTGRES.getUsername());
-        System.setProperty("spring.r2dbc.password", POSTGRES.getPassword());
+        System.setProperty("spring.datasource.url", POSTGRES.getJdbcUrl());
+        System.setProperty("spring.datasource.username", POSTGRES.getUsername());
+        System.setProperty("spring.datasource.password", POSTGRES.getPassword());
         System.setProperty("spring.datasource.driver-class-name", POSTGRES.getDriverClassName());
-    }
-
-    public static void stopPostgres() {
-        POSTGRES.start();
     }
 
 }

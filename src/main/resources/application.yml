@@ -1,11 +1,15 @@
 spring:
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/test_postgres_db
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test_postgres_db
     username: postgres
     password: pwd123
 
   flyway:
-    url: jdbc:postgresql://localhost:5432/test_postgres_db
     schemas: credit_check
-    baseline-on-migrate: true
-    baseline-version: 0
+    enabled: true
+
+app:
+  inventory:
+    data:
+      path: src/main/resources/inventory_data.csv

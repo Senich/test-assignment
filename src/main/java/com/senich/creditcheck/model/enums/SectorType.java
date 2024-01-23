@@ -11,5 +11,6 @@ public enum SectorType {
     COMMUNICATION_SERVICES,
     UTILITIES,
     REAL_ESTATE,
+    INDUSTRIALS,
     OTHER
 }

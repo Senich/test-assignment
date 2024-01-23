@@ -1,17 +1,21 @@
 package com.senich.creditcheck.model.dto;
 
-import com.senich.creditcheck.model.enums.SectorType;
 import com.senich.creditcheck.model.enums.SecurityType;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.senich.creditcheck.model.enums.TradeType;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Security {
+public class TradeRequest {
+
+    private long traderId;
+    private long portfolioId;
     private String symbol;
+    private int quantity;
     private double price;
     private SecurityType securityType;
-    private SectorType sectorType;
-    private AtomicInteger availableQty;
+    private TradeType tradeType;
+    private Long tradeId;
+
 }
